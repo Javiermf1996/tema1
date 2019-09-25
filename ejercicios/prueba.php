@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>Ejercicios tema1 PHP</h1>
+
 escrito en casa
+
+    <p>vamos a usar git antes de</p>
+    escrito en clase
+
 </body>
 </html>
