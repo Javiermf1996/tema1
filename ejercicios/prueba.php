@@ -8,6 +8,6 @@
 </head>
 <body>
     <h1>Ejercicios tema1 PHP</h1>
-
+escrito en casa
 </body>
 </html>
