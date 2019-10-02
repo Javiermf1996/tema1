@@ -1,5 +1,7 @@
 <?php   
 
+setcookie("miCookie", $lista,time() +  3600);
+
  if (isset($_REQUEST['lista'])) {
         $lista = $_REQUEST['lista'];
  } else {
