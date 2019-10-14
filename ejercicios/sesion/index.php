@@ -5,78 +5,77 @@ session_destroy() */
 
 class Sesion
 {
-  public $nombre;
-  public $creada;
-  public $cookie;
- 
+    public $nombre;
+    public $creada;
+    public $cookie;
 
-  public function __construct($nombre)
-  {
 
-    $this->nombre = $nombre;
+    public function __construct($nombre)
+    {
 
-    session_start();
-  }
+        $this->nombre = $nombre;
 
-  function login()
-  {
-
-    require "vista.php";
-  }
-
-  function delete(){
-
-    if (isset($_GET['key'])){
-      $key =$_GET['key'];
-      unset($_SESSION[wished][$key]);
-      header('Location: ?method=home');
+        session_start();
     }
-  }
 
-  function auth()
-  {
-    if (!empty($_POST['nombre'])) {
-      $_SESSION[$nombre] = $_POST['nombre'];
+    function login()
+    {
 
-      header('Location: index.php?method=home');
-    } else {
-      header('Location: index.php?method=login');
+        require "vista.php";
     }
-  }
 
-  function home()
-  
-  {
-    echo "hola $_SESSION[$nombre]";
+    function delete()
+    {
+
+        if (isset($_GET['key'])) {
+            $key = $_GET['key'];
+            unset($_SESSION['deseos'][$key]);
+            header('Location: index.php?method=home');
+        }
+    }
+
+    function auth()
+    {
+        if (!empty($_POST['nombre'])) {
+            $_SESSION[$nombre] = $_POST['nombre'];
+
+            header('Location: index.php?method=home');
+        } else {
+            header('Location: index.php?method=login');
+        }
+    }
+
+    function home()
+    {
  
-    $_SESSION['deseos'][] = $_POST['deseo'];
-     
-      echo "<ul>";
-      foreach ($_SESSION['deseos'] as $key => $deseo) { 
-        echo "<li> $deseo <a href='method?=delete'/></li>" ;
-      }
-      echo"</ul>";
-      
+        $metodo = "index.php?method=delete";
+        echo "hola $_SESSION[$nombre]";
 
-      header('Location: .');
-  
-    require "vista2.php";
-  }
+       
+ 
+        require "vista2.php";
+    }
+
+    function añadirDeseo()
+    {
+        $_SESSION['deseos'][] = $_POST['deseo'];
+
+    }
 }
 
 $app = new Sesion('');
 
 if (isset($_GET['method'])) {
-  $method = $_GET['method'];
+    $method = $_GET['method'];
 } else {
-  $method = 'login';
+    $method = 'login';
 }
 
 
 //$app->saludar();
 if (method_exists($app, $method)) {
-  $app->$method();
+    $app->$method();
 } else {
-  die('metodo no encontrado');
-  exit(3);
+    die('metodo no encontrado');
+    exit(3);
 }

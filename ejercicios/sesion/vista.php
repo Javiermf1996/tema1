@@ -13,7 +13,7 @@
 
     <label for="nombre">Login: </label>
    
-    <input type="text" name="nombre" value="" />
+    <input type="text" name="nombre"/>
     <br>
     
     <input type="submit"/>

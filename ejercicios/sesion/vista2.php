@@ -10,6 +10,17 @@
 
 <body>
     <h1>Tus cosas</h1>
+
+    <ul> 
+       <?php foreach ($_SESSION['deseos'] as $key => $deseo) {
+            echo "<li> $deseo  <a href=$metodo&key=$key>Borrar</a> </li>";
+        }
+        ?>
+    </ul>
+
+
+
+
     <form action="index.php?method=home" method="post">
 
         <label for="deseos">Lista de deseos: </label>
