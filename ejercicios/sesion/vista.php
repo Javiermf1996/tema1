@@ -7,13 +7,13 @@
      <title>Document</title>
  </head>
  <body> 
-     <h1>Nuevo Jugador</h1>
+     <h1>Login</h1>
 
-     <form action ="index.php?method=respuesta" method="post">
+     <form action ="index.php?method=auth" method="post">
 
-    <label for="nombre">Nuevo jugador: </label>
+    <label for="nombre">Login: </label>
    
-    <input type="text" name="nombre" value=" <?php echo $nombre ?>" />
+    <input type="text" name="nombre" value="" />
     <br>
     
     <input type="submit"/>

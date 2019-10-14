@@ -1,15 +1,15 @@
 <?
 class Formulario{
-var $nombre;
+public $nombre;
 
 
 public function __construct($nombre){
  
- $this->$nombre = $nombre;
+ $this->nombre = $nombre;
  
 }
 
-function formulario(){
+public function formulario(){
     if (isset($__COOKIE['nombre'])) {
         $nombre = $__COOKIE['nombre'];
     }else{
@@ -19,7 +19,7 @@ function formulario(){
  
 }
 
-function respuesta(){
+public function respuesta(){
     if (isset($_POST['nombre'])) {
         $nombre = $_POST['nombre'];
         
@@ -36,7 +36,7 @@ function respuesta(){
 
 print_r($__COOKIE); 
 
-$app = new Formulario('Javier');
+$app = new Formulario('');
 
 if (isset($_GET['method'])) {
     $method = $_GET['method'];
