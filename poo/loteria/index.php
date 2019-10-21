@@ -9,7 +9,7 @@ class Loteria{
 
         if (isset( $_SESSION['apuesta'])) {
             $this->apuesta = $_SESSION['apuesta'];
-            $this-> apuestas;
+           
         } else {
             $this->apuesta = [];
             
@@ -23,13 +23,14 @@ class Loteria{
     }
 
     function alternar(){
-
-
-        if (isset($_GET['numero']) && !in_array($_GET['numero'], $this->apuesta)) {
-            $this->apuesta[] = $_GET['numero'];
+        if(!isset( $_SESSION['apuesta'])) {
+            $_SESSION['apuesta'] = array();
+        }
+        if (isset($_GET['numero']) && !in_array($_GET['numero'],  $_SESSION['apuesta'])) {
+            $_SESSION['apuesta'][$_GET['numero']] = $_GET['numero'];
             header('Location: index.php?method=loteria');
-        }else if(in_array($_GET['numero'], $this->apuesta)){ 
-                unset($this->apuesta[$_GET['numero']]);
+        }else if(in_array($_GET['numero'],  $_SESSION['apuesta'])){ 
+                unset( $_SESSION['apuesta'][$_GET['numero']]);
                 header('Location: index.php?method=loteria');
         } else {
             die("otro caso");
@@ -38,14 +39,18 @@ class Loteria{
     }
 
     function flush(){
-        if(count($this->apuesta[]) > 6){
-        
-        }else if(count($this->apuesta[]) < 6){
-
-        }else{
-
+        if (isset( $_SESSION['apuesta'])) {
+            if(count( $_SESSION['apuesta']) < 6){
+                 echo "La apuesta esta incompleta.";
+                }else if(count( $_SESSION['apuesta']) > 6){
+                  echo "La apuesta es multiple.";
+                }else{
+                  echo "La apuesta esta completa.";    
+                 }
+                 unset($_SESSION['apuesta']);
+                 header('Location: index.php?method=loteria');
+            }
         }
-    }
 }
 
 $app = new Loteria();
@@ -55,8 +60,6 @@ if (isset($_GET['method'])) {
 } else {
     $method = 'loteria';
 }
-
-
 //$app->saludar();
 if (method_exists($app, $method)) {
     $app->$method();
