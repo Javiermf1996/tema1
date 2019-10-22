@@ -21,10 +21,10 @@
         <label for="Operaciones"></label>
         <br>
         <select name="Operaciones">
-            <option value="suma">+</option>
-            <option value="resta">-</option>
-            <option value="multiplicacion">*</option>
-            <option value="division">/</option>
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
         </select>
         <br>
         <br>
@@ -39,23 +39,23 @@
 
     <ul> Lista de resultados:
         <?php
-        foreach ($_SESSION['resultados'] as $key => $resultado) {
-            echo "<li>El resultado es $resultado</li>";
+        foreach ($_SESSION['resultado'] as $key => $resul ) {
+            echo "<li>El resultado es $resul </li>";
         }
         ?>
     </ul>
-    <ul> Fallos en el numero 1:
+    <ul> Fallos en el primer número:
         <?php
         foreach ($_SESSION['numero1'] as $key => $numero1) {
-            echo "<li>Fallos en el primer numero $numero1</li>";
+            echo "<li>No es un número:  $numero1</li>";
         }
         ?>
 
     </ul>
-    <ul> Fallos en el numero 2:
+    <ul> Fallos en el segundo número:
         <?php
         foreach ($_SESSION['numero2'] as $key => $numero2) {
-            echo "<li>Fallos en el primer numero $numero2</li>";
+            echo "<li>No es un número:  $numero2</li>";
         }
         ?>
     </ul>
