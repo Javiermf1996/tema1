@@ -12,15 +12,9 @@ a {
     color: black;   
 }
 
-a:active {
+a:visited {
     color: blue;
 }
-
-a[tabindex]:focus {
-    color:blue;
-    outline: none;
-}
-
 
 </style>
 </head>
@@ -43,15 +37,17 @@ a[tabindex]:focus {
       <form action="index.php?method=flush">
       <input type="submit">
       </form> 
-          
+      
         <?php
-     
-    echo "<pre>";
-    var_dump($_SESSION);
-    echo "</pre>";
-        ?>
+        if(count( $_SESSION['apuesta']) < 6){ echo"<ul> La apuesta esta incompleta.";}
+        else if(count( $_SESSION['apuesta']) == 6){ echo"<ul> La apuesta esta completa.";}
+        else{ echo"<ul>La apuesta es multiple.";}
 
+
+        foreach ($_SESSION['apuesta'] as $key => $resul ) {
+            echo "<li> $resul </li>";
+        }
+        ?>
+    </ul>
 
 </body>
-
-</html>
