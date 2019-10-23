@@ -8,14 +8,15 @@
     <title>Loteria</title>
 
 <style>
-a {   
-    color: black;   
+.unselect a:link{
+    color:black;
 }
-
-a:visited {
-    color: blue;
+.select a:visited{
+    color:blue;
 }
-
+.unselect a:visited{
+    color:black;
+}
 </style>
 </head>
 
@@ -25,7 +26,11 @@ a:visited {
       <?php
        echo "<tr>";
         for ($i=1; $i < 50 ; $i++) { 
-            echo '<td><a href="index.php?method=alternar&numero='.$i.'"   >'.$i. '</a>';
+            if($_SESSION['apuesta'][$i] == $i){
+            echo '<td class="select"><a href="index.php?method=alternar&numero='.$i.'"   >'.$i. '</a>';
+             }else{
+            echo '<td class="unselect"><a href="index.php?method=alternar&numero='.$i.'"   >'.$i. '</a>';
+            }
            if($i%7==0){
             echo"</tr>";
             echo "<tr>";
@@ -42,8 +47,6 @@ a:visited {
         if(count( $_SESSION['apuesta']) < 6){ echo"<ul> La apuesta esta incompleta.";}
         else if(count( $_SESSION['apuesta']) == 6){ echo"<ul> La apuesta esta completa.";}
         else{ echo"<ul>La apuesta es multiple.";}
-
-
         foreach ($_SESSION['apuesta'] as $key => $resul ) {
             echo "<li> $resul </li>";
         }
@@ -51,3 +54,4 @@ a:visited {
     </ul>
 
 </body>
+</html>
