@@ -1,91 +1,109 @@
 <?php
-class Galeria{
-  
-
-    public function __construct()
-    {
-       
-        session_start();
-
-        if (isset( $_SESSION['galeria'])) {
-            $this->galeria = $_SESSION['galeria'];
-           
-        } else {
-            $this->galeria = [];
-            
-        }
-
-    }
-
-    function galeria()
-    {
-        require "vista.php";
-    }
-
-    function carga(){
-        $target_dir = "Imagenes/";
-        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+class App{
+    
+       const FOLDERP = "imagenes/";
+    function subirImagen(){     
+        
+        $target_dir = "imagenes/";
+        $target_file = $target_dir . basename($_FILES["imagen1"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         // Check if image file is a actual image or fake image
         if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            $check = getimagesize($_FILES["imagen1"]["tmp_name"]);
             if($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = 1;
-                header('Location: index.php?method=galeria');
             } else {
+                echo "File is not an image.";
                 $uploadOk = 0;
-                header('Location: index.php?method=galeria');
             }
         }
         // Check if file already exists
         if (file_exists($target_file)) {
+            echo "Sorry, file already exists.";
             $uploadOk = 0;
-            header('Location: index.php?method=galeria');
         }
         // Check file size
-        if ($_FILES["fileToUpload"]["size"] > 2000) {
+        if ($_FILES["imagen1"]["size"] > 500000) {
+            echo "Sorry, your file is too large.";
             $uploadOk = 0;
-            header('Location: index.php?method=galeria');
         }
         // Allow certain file formats
         if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
         && $imageFileType != "gif" ) {
+            echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
             $uploadOk = 0;
-            header('Location: index.php?method=galeria');
         }
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            header('Location: index.php?method=galeria');
+            echo "Sorry, your file was not uploaded.";
         // if everything is ok, try to upload file
         } else {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                header('Location: index.php?method=galeria');
+            if (move_uploaded_file($_FILES["imagen1"]["tmp_name"], $target_file)) {
+                header('Location: index.php?method=verGaleria');
+                echo "La imagen ". basename( $_FILES["imagen1"]["name"]). " ha sido subido.";
             } else {
-                header('Location: index.php?method=galeria');
+                header('Location: index.php?method=verGaleria');
+                echo "Sorry, there was an error uploading your file.";
             }
         }
+       
     }
-    
-    function show(){
+    public function verGaleria()
+    {
+        $folder_path = 'imagenes/'; 
         
-        require "vista2.php";
+        $files = glob($folder_path . "*.{JPG,jpg,gif,png,bmp,jpeg}", GLOB_BRACE);
+        // var_dump($num_files);
+        // exit();
+        // $folder = opendir($folder_path);
+        
+        // if($num_files > 0)
+        // {
+        //     while($num_files != 0 ) 
+        //     {
+        //         $file_path = $folder_path.$file;
+        //         $extension = strtolower(pathinfo($file ,PATHINFO_EXTENSION));
+        //         if($extension=='jpg' || $extension =='png' || $extension == 'gif' || $extension == 'bmp' ||$extension=='jpeg') 
+        //         {
+                    // 
+                    // <a href="<?php echo $file_path; "><img src="<?php echo $file_path; "  height="250" /></a>
+                    // 
+        //   }
+        //   $num_files--;
+        // }
+    // }
+    // else
+    // {
+    //     echo "La carpeta esta vacia.";
+    // }
+    // closedir($folder);
+    require('vista.php');
+    }
+    public function delete()
+    {
+        $file = $_GET['file'];
+       
+        
+        unlink($file);
+        
+        header('Location: .');
+    }
+    public function show()
+    {
+       $file = $_GET['file'];
+       $stats = stat($file);
+       require 'vista2.php';
     }
 }
-
-$app = new Galeria();
-
+    
+    
+$App = new App();
 if (isset($_GET['method'])) {
     $method = $_GET['method'];
 } else {
-    $method = 'galeria';
+    $method = 'verGaleria';
 }
-
-//$app->saludar();
-if (method_exists($app, $method)) {
-    $app->$method();
-} else {
-    die('metodo no encontrado');
-    exit(3);
-}
+$App->$method();
 ?>
