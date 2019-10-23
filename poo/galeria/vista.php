@@ -9,12 +9,25 @@
 </head>
 
 <body>
+    <table>
+     
+<?php 
+echo "<tr>";
+foreach($files as $key => $file){  ?>
+ <td> 
+ <?php echo '<a href="index.php?method=show&file='.$file.'"><a> <img src ="'.$file.'" width=100px /></a>'; ?>
+ <td>
+ <?php if($key%4==0){
+            echo"</tr>";
+            echo "<tr>";
+           } ?>
+<?php } ?>
 
-  
-      <form action="index.php?method=subir" method="post" enctype="multipart/form-data">
+  </table>
+    <form action="index.php?method=carga" method="post" enctype="multipart/form-data">
     Selecciona una imagen:
-    <input type="file" name="fileToUpload" id="fileToUpload">
-    <input type="submit" value="Upload Image" name="submit">
+    <input type="file" name="file" id="file">
+    <input type="submit" name="carga">
 </form>
 
 
