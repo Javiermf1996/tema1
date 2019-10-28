@@ -1,34 +1,29 @@
 <?php
 class Loteria{
   
-
+    //Contructor loteria
     public function __construct()
     {
        
         session_start();
 
-        if (isset( $_SESSION['apuesta'])) {
-            $this->apuesta = $_SESSION['apuesta'];
-           
-        } else {
-            $this->apuesta = [];
-            
-        }
-
     }
-
+    //lleva a la vista en primer lugar
     function loteria()
     {
         require "vista.php";
     }
-
+   
     function alternar(){
-        if(!isset( $_SESSION['apuesta'])) {
+        //si el array existe 
+        if(!isset( $_SESSION['apuesta'])) { 
             $_SESSION['apuesta'] = array();
         }
+        //si el numero existe y no esta en el array
         if (isset($_GET['numero']) && !in_array($_GET['numero'],  $_SESSION['apuesta'])) {
             $_SESSION['apuesta'][$_GET['numero']] = $_GET['numero'];
             header('Location: index.php?method=loteria');
+        //si el numero esta en el array
         }else if(in_array($_GET['numero'],  $_SESSION['apuesta'])){ 
                 unset( $_SESSION['apuesta'][$_GET['numero']]);
                 header('Location: index.php?method=loteria');
@@ -39,6 +34,7 @@ class Loteria{
     }
 
     function flush(){
+        //marca como es la apuesta
         if (isset( $_SESSION['apuesta'])) {
             if(count( $_SESSION['apuesta']) < 6){
                  echo "La apuesta esta incompleta.";
