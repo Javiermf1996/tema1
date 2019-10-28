@@ -8,20 +8,15 @@
     <title>Loteria</title>
 
 <style>
-a {   
-    color: black;   
+.unselect a:link{
+    color:black;
 }
-
-a:active {
-    color: blue;
-}
-
-a[tabindex]:focus {
+.select a:visited{
     color:blue;
-    outline: none;
 }
-
-
+.unselect a:visited{
+    color:black;
+}
 </style>
 </head>
 
@@ -31,7 +26,11 @@ a[tabindex]:focus {
       <?php
        echo "<tr>";
         for ($i=1; $i < 50 ; $i++) { 
-            echo '<td><a href="index.php?method=alternar&numero='.$i.'"   >'.$i. '</a>';
+            if($_SESSION['apuesta'][$i] == $i){
+            echo '<td class="select"><a href="index.php?method=alternar&numero='.$i.'"   >'.$i. '</a>';
+             }else{
+            echo '<td class="unselect"><a href="index.php?method=alternar&numero='.$i.'"   >'.$i. '</a>';
+            }
            if($i%7==0){
             echo"</tr>";
             echo "<tr>";
@@ -43,15 +42,16 @@ a[tabindex]:focus {
       <form action="index.php?method=flush">
       <input type="submit">
       </form> 
-          
+      
         <?php
-     
-    echo "<pre>";
-    var_dump($_SESSION);
-    echo "</pre>";
+        if(count( $_SESSION['apuesta']) < 6){ echo"<ul> La apuesta esta incompleta.";}
+        else if(count( $_SESSION['apuesta']) == 6){ echo"<ul> La apuesta esta completa.";}
+        else{ echo"<ul>La apuesta es multiple.";}
+        foreach ($_SESSION['apuesta'] as $key => $resul ) {
+            echo "<li> $resul </li>";
+        }
         ?>
-
+    </ul>
 
 </body>
-
 </html>
