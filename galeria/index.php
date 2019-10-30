@@ -9,44 +9,23 @@ class Galeria
     }
     function galeria()
     {
-        $files = glob(Galeria::FOLDER_PATH . "*.{jpg,png,jpeg,git}", GLOB_BRACE);
+        $files = glob(Galeria::FOLDER_PATH ."*.{jpg,png,jpeg,git}", GLOB_BRACE);
         // exit();
         require "vista.php";
     }
     function carga()
     {
-        $target_file = Galeria::FOLDER_PATH . basename($_FILES["file"]["tmp_name"]);
-        $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-        // si es una imagen
-        if (isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["file"]["tmp_name"]);
-            if ($check !== false) {
-                $uploadOk = 1;
-            } else {
-                $uploadOk = 0;
-            }
+        $target_file = Galeria::FOLDER_PATH. basename($_FILES["file"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+        if(file_exists($target_file)){
+            $_SESSION['message'] = "La imagen ya existe.";
+        }else if ($_FILES["file"]["size"] > 1000000) {
+        }else{
+            move_uploaded_file($_FILES["file"]["tmp_name"],$target_file);
         }
-        //si existe
-        if (file_exists($target_file)) {
-            $uploadOk = 0;
-        }
-        // tamaño de la imagen
-        if ($_FILES["file"]["size"] > 1000) {
-            $uploadOk = 0;
-        }
-        // si hay algun error
-        if ($uploadOk == 0) {
-            header('Location: index.php?method=galeria');
-            // if everything is ok, try to upload file
-        } else {
-            if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
-                header('Location: index.php?method=galeria');
-            } else {
-                header('Location: index.php?method=galeria');
-            }
-        }
+        header('Location: index.php?method=galeria');
     }
+    
 
     function show()
     {

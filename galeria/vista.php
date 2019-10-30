@@ -26,8 +26,8 @@
     </table>
     <form action="index.php?method=carga" method="post" enctype="multipart/form-data">
         Selecciona una imagen:
-        <input type="file" name="file" >
-        <input type="submit" name="carga">
+        <input type="file" id="file" name="file" >
+        <input type="submit">
     </form>
 
 
